@@ -27,7 +27,7 @@ class Clean_TwigMail_Model_Email_Template extends Clean_TwigMail_Model_Email_Tem
 
         preg_match("/{#\ssubject:\s(.*)#}/", $templateText, $matches);
         if (!isset($matches[1])) {
-            throw new Exception("Wasn't able to find subject line in template (ex: {# subject: Subject Line #}");
+            throw new Exception("Wasn't able to find subject line in template (ex: {# subject: Subject Line #}).");
         }
 
         return trim($matches[1]);

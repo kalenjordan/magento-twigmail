@@ -11,7 +11,6 @@ class Clean_TwigMail_Model_Mailer_Test extends Clean_TwigMail_Model_Mailer
     {
         return array(
             'day_of_the_week' => date('D'),
-            'subject'       => 'Test',
         );
     }
 }

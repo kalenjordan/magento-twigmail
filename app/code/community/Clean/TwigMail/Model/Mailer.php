@@ -15,16 +15,10 @@ abstract class Clean_TwigMail_Model_Mailer extends Mage_Core_Model_Email_Templat
 
     abstract protected function _getTemplateVariables();
 
-    public function getTemplateId()
-    {
-        return $this->_getTemplateId();
-    }
-
-    public function getTemplateVariables()
-    {
-        return $this->_getTemplateVariables();
-    }
-
+    /**
+     * Overload this with an array of emails to receive a BCC.
+     * @return null
+     */
     protected function _getBccEmails()
     {
         return null;
@@ -73,11 +67,6 @@ abstract class Clean_TwigMail_Model_Mailer extends Mage_Core_Model_Email_Templat
 
     public function send()
     {
-        $variables = $this->_getTemplateVariables();
-        if (!isset($variables['subject'])) {
-            throw new Exception("You need to have a subject set for the template");
-        }
-
         $this->addEmailInfo($this->_getEmailInfo())
             ->setSender(Mage::getStoreConfig($this->_getSenderIdentity()))
             ->setTemplateId($this->_getTemplateId())
