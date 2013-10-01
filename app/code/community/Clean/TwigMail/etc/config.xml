@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Clean_TwigMail>
+            <version>1.0.0</version>
+        </Clean_TwigMail>
+    </modules>
+    <global>
+        <blocks>
+            <twigmail>
+                <class>Clean_TwigMail_Block</class>
+            </twigmail>
+        </blocks>
+        <helpers>
+            <twigmail>
+                <class>Clean_TwigMail_Helper</class>
+            </twigmail>
+        </helpers>
+        <models>
+            <twigmail>
+                <class>Clean_TwigMail_Model</class>
+            </twigmail>
+            <core>
+                <rewrite>
+                    <email_template>Clean_TwigMail_Model_Email_Template</email_template>
+                </rewrite>
+            </core>
+        </models>
+        <template>
+            <email>
+                <clean_twigmail_test_email_template translate="label" module="cleanshare">
+                    <label>Test Email</label>
+                    <file>twigmail/test.html.twig</file>
+                    <type>html</type>
+                    <renderer>twig</renderer>
+                </clean_twigmail_test_email_template>
+            </email>
+        </template>
+    </global>
+
+    <admin>
+        <routers>
+            <admin_twigmail>
+                <use>admin</use>
+                <args>
+                    <module>Clean_TwigMail</module>
+                    <frontName>admin_twigmail</frontName>
+                </args>
+            </admin_twigmail>
+        </routers>
+    </admin>
+
+</config>

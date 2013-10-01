@@ -1,0 +1,17 @@
+{
+    "name": "kalenjordan/magento-twigmail",
+    "license": "OSL-3.0",
+    "type": "magento-module",
+    "description": "Twig email templates for Magento. ",
+    "require": {
+        "magento-hackathon/magento-composer-installer": "*",
+        "twig/twig": "dev-master"
+    },
+    "authors":[
+        {
+            "name":"Kalen Jordan",
+            "homepage": "http://twitter.com/kalenjordan"
+        }
+    ]
+}
+

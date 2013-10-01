@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Clean_TwigMail>
+            <active>true</active>
+            <codePool>community</codePool>
+            <depends></depends>
+        </Clean_TwigMail>
+    </modules>
+</config>
