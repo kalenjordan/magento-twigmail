@@ -17,13 +17,35 @@ class Clean_TwigMail_Model_Email_Template extends Clean_TwigMail_Model_Email_Tem
         return false;
     }
 
-    public function getProcessedTemplateSubject(array $variables)
+    public function getTemplateSubject()
     {
-        if (!isset($variables['subject'])) {
-            throw new Exception("There should be a subject template variable set");
+        if (! $this->_isTwigTemplate()) {
+            return parent::getTemplateSubject();
         }
 
-        return $variables['subject'];
+        $templateText = $this->getTemplateText();
+
+        preg_match("/{#\ssubject:\s(.*)#}/", $templateText, $matches);
+        if (!isset($matches[1])) {
+            throw new Exception("Wasn't able to find subject line in template (ex: {# subject: Subject Line #}");
+        }
+
+        return trim($matches[1]);
+    }
+
+    public function getProcessedTemplateSubject(array $variables)
+    {
+        if (! $this->_isTwigTemplate()) {
+            return parent::getProcessedTemplateSubject($variables);
+        }
+
+        $templateSubject = $this->getTemplateSubject();
+        $loader = new Twig_Loader_String();
+        $twig = new Twig_Environment($loader);
+
+        $processedTemplateSubject = $twig->render($templateSubject, $variables);
+
+        return $processedTemplateSubject;
     }
 
     public function getProcessedTemplate(array $variables = array())
@@ -86,15 +108,8 @@ class Clean_TwigMail_Model_Email_Template extends Clean_TwigMail_Model_Email_Tem
             $data['file'], 'email', $locale
         );
 
-        $variables = $this->getTemplateVariables();
-        if (!isset($variables['subject'])) {
-            throw new Exception("There should be a subject line set on the template");
-        }
-
-        $this->setTemplateSubject($variables['subject']);
         $this->setTemplateText($templateText);
         $this->setId($templateId);
-
         $this->setTemplateFilePath($data['file']);
         $this->setLocale($locale);
 
