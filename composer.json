@@ -5,7 +5,7 @@
     "description": "Twig email templates for Magento. ",
     "require": {
         "magento-hackathon/magento-composer-installer": "*",
-        "twig/twig": "dev-master"
+        "twig/twig": "1.*"
     },
     "authors":[
         {
