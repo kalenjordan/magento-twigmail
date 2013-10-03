@@ -4,6 +4,8 @@ abstract class Clean_TwigMail_Model_Mailer extends Mage_Core_Model_Email_Templat
 {
     abstract protected function _getTemplateId();
 
+    abstract protected function _getTemplateVariables();
+
     protected function _getRecipientEmails()
     {
         if (! $this->getData('recipient_email')) {
@@ -13,7 +15,26 @@ abstract class Clean_TwigMail_Model_Mailer extends Mage_Core_Model_Email_Templat
         return $this->getData('recipient_email');
     }
 
-    abstract protected function _getTemplateVariables();
+    /**
+     * In some cases we need to grab the template variables off of the mailer.
+     * For example, if implementing a preview controller.
+     *
+     * @return mixed
+     */
+    public function getTemplateVariables()
+    {
+        return $this->_getTemplateVariables();
+    }
+
+    /**
+     * Same deal as getTemplateVariables()
+     *
+     * @return int|null
+     */
+    public function getTemplateId()
+    {
+        return $this->_getTemplateId();
+    }
 
     /**
      * Overload this with an array of emails to receive a BCC.
