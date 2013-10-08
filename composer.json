@@ -5,8 +5,15 @@
     "description": "Twig email templates for Magento. ",
     "require": {
         "magento-hackathon/magento-composer-installer": "*",
+        "ajbonner/mage-composer-autoload": "dev-master",
         "twig/twig": "1.*"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/ajbonner/mage-composer-autoload"
+        }
+    ],
     "authors":[
         {
             "name":"Kalen Jordan",

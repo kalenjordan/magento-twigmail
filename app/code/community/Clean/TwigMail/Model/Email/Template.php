@@ -1,8 +1,5 @@
 <?php
 
-require_once 'vendor/twig/twig/lib/Twig/Autoloader.php';
-Twig_Autoloader::register();
-
 class Clean_TwigMail_Model_Email_Template extends Clean_TwigMail_Model_Email_Template_Abstract
 {
     protected $_templateVariables;
