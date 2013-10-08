@@ -8,12 +8,6 @@
         "ajbonner/mage-composer-autoload": "dev-master",
         "twig/twig": "1.*"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/ajbonner/mage-composer-autoload"
-        }
-    ],
     "authors":[
         {
             "name":"Kalen Jordan",
