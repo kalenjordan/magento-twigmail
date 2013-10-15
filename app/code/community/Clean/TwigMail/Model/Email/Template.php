@@ -62,6 +62,13 @@ class Clean_TwigMail_Model_Email_Template extends Clean_TwigMail_Model_Email_Tem
         $loader = new Twig_Loader_Filesystem($pathToEmailTemplates);
         $twig = new Twig_Environment($loader);
 
+        $engine = new \Aptoma\Twig\Extension\MarkdownEngine\MichelfMarkdownEngine();
+        $extension = new \Aptoma\Twig\Extension\MarkdownExtension($engine);
+        $twig->addExtension($extension);
+
+        $tokenParser = new \Aptoma\Twig\TokenParser\MarkdownTokenParser($engine);
+        $twig->addTokenParser($tokenParser);
+
         $filePath = $this->getData('template_file_path');
         return $twig->render($filePath, $variables);
     }
