@@ -32,11 +32,9 @@ You can trigger a test email by going to *System* > *Configuration* >
 To Do
 -----
 
-Need to implement the autoloader better - it's downright [ugly](https://github.com/kalenjordan/magento-twigmail/blob/master/app/code/community/Clean/TwigMail/Model/Email/Template.php#L3) right now.
+  - Haven't quite worked out yet how best to allow template overrides to happen.  Should
+    be possible by just overriding the email template config node, but overriding using
+    transactional email templates in the databse isn't possible yet.
 
-Haven't quite worked out yet how best to allow template overrides to happen.  Should
-be possible by just overriding the email template config node, but overriding using
-transactional email templates in the databse isn't possible yet.
-
-I tend to like managing email copy in the code base though, so it wasn't a huge
-priority for me.
+  - I tend to like managing email copy in the code base though, so it wasn't a huge
+    priority for me.
