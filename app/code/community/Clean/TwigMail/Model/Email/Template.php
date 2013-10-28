@@ -54,6 +54,11 @@ class Clean_TwigMail_Model_Email_Template extends Clean_TwigMail_Model_Email_Tem
         if (!isset($variables['logo_url'])) {
             $variables['logo_url'] = $this->_getLogoUrl(Mage::app()->getStore()->getId());
         }
+
+        if (!isset($variables['store_url'])) {
+            $variables['store_url'] = Mage::getBaseUrl();
+        }
+
         if (!isset($variables['logo_alt'])) {
             $variables['logo_alt'] = $this->_getLogoAlt(Mage::app()->getStore()->getId());
         }
