@@ -25,14 +25,18 @@ class Clean_TwigMail_Model_Email_Template extends Clean_TwigMail_Model_Email_Tem
             return parent::getTemplateSubject();
         }
 
-        $templateText = $this->getTemplateText();
+        if ($this->_isDefaultTemplate()) {
+            $templateText = $this->getTemplateText();
 
-        preg_match("/{#\ssubject:\s(.*)#}/", $templateText, $matches);
-        if (!isset($matches[1])) {
-            throw new Exception("Wasn't able to find subject line in template (ex: {# subject: Subject Line #}).");
+            preg_match("/{#\ssubject:\s(.*)#}/", $templateText, $matches);
+            if (!isset($matches[1])) {
+                throw new Exception("Wasn't able to find subject line in template (ex: {# subject: Subject Line #}).");
+            }
+
+            return trim($matches[1]);
+        } else {
+            return $this->getData('template_subject');
         }
-
-        return trim($matches[1]);
     }
 
     public function getProcessedTemplateSubject(array $variables)
