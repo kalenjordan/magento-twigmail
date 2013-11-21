@@ -12,6 +12,9 @@ Add to your composer.json:
         "kalenjordan/magento-twigmail": "dev-master",
     }
 
+Usage
+-----
+
 Then, when you're declaring a template file, just add the `<renderer>twig</renderer>`
 node.
 
@@ -25,7 +28,13 @@ node.
             </clean_twigmail_test_email_template>
         </email>
     </template>
-    
+
+You can also enable Twig rendering for a database template by having the *Template
+Content* start with `{# twig #}`.
+
+Testing
+-------
+
 You can trigger a test email by going to *System* > *Configuration* > 
 *System* > *Twig E-Mail Templates* > *Send Test*
 
