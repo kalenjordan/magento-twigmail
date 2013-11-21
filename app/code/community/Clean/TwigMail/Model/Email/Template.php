@@ -11,6 +11,11 @@ class Clean_TwigMail_Model_Email_Template extends Clean_TwigMail_Model_Email_Tem
             return true;
         }
 
+        $templateText = $this->getTemplateText();
+        if ($templateText && substr($templateText, 0, 10) == '{# twig #}') {
+            return true;
+        }
+
         return false;
     }
 
@@ -63,8 +68,20 @@ class Clean_TwigMail_Model_Email_Template extends Clean_TwigMail_Model_Email_Tem
             $variables['logo_alt'] = $this->_getLogoAlt(Mage::app()->getStore()->getId());
         }
 
-        $pathToEmailTemplates = Mage::getBaseDir('locale') . DS . $this->getData('locale') . DS . 'template' . DS . 'email';
-        $loader = new Twig_Loader_Filesystem($pathToEmailTemplates);
+        if ($this->_isDefaultTemplate()) {
+            return $this->_renderDefaultTemplate($variables);
+        } else {
+            return $this->_renderDatabaseTemplate($variables);
+        }
+    }
+
+    protected function _isDefaultTemplate()
+    {
+        return $this->hasData('template_file_path');
+    }
+
+    protected function _initializeTwig($loader)
+    {
         $twig = new Twig_Environment($loader);
 
         $engine = new \Aptoma\Twig\Extension\MarkdownEngine\MichelfMarkdownEngine();
@@ -74,8 +91,31 @@ class Clean_TwigMail_Model_Email_Template extends Clean_TwigMail_Model_Email_Tem
         $tokenParser = new \Aptoma\Twig\TokenParser\MarkdownTokenParser($engine);
         $twig->addTokenParser($tokenParser);
 
+        return $twig;
+    }
+
+    protected function _renderDefaultTemplate($variables)
+    {
+        $pathToEmailTemplates = Mage::getBaseDir('locale') .
+            DS . $this->getData('locale') .
+            DS . 'template' .
+            DS . 'email';
+
+        $loader = new Twig_Loader_Filesystem($pathToEmailTemplates);
+        $twig = $this->_initializeTwig($loader);
         $filePath = $this->getData('template_file_path');
+
         return $twig->render($filePath, $variables);
+    }
+
+    protected function _renderDatabaseTemplate($variables)
+    {
+        $loader = new Twig_Loader_String();
+
+        $content = $this->getTemplateText();
+        $twig = $this->_initializeTwig($loader);
+
+        return $twig->render($content, $variables);
     }
 
     public function sendTransactional($templateId, $sender, $email, $name, $vars=array(), $storeId=null)
@@ -97,6 +137,11 @@ class Clean_TwigMail_Model_Email_Template extends Clean_TwigMail_Model_Email_Tem
     public function setLocale($locale)
     {
         $this->setData('locale', $locale);
+    }
+
+    public function loadByCode($templateCode)
+    {
+        return parent::loadByCode($templateCode);
     }
 
     public function loadDefault($templateId, $locale=null)
